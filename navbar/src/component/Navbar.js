@@ -1,14 +1,16 @@
 import { AppBar, Avatar, Toolbar } from "@mui/material"
 import DehazeIcon from '@mui/icons-material/Dehaze';
 import { AiOutlineClose } from "react-icons/ai";
-import { Typography } from "@material-ui/core";
-import { makeStyles, Grid } from "@material-ui/core";
+import { alpha, InputBase, Typography } from "@material-ui/core";
+import { makeStyles } from "@material-ui/core/styles";
+import { Grid } from "@material-ui/core";
 import { SidebarData } from './SidebarData'
 import { useState } from "react";
 import Home from '../component/landing pages/Home.js'
 
-import {Link, Route, Routes } from 'react-router-dom';
-const Styles = makeStyles((theme) => ({
+import { Link, Route, Routes } from 'react-router-dom';
+import { Search } from "@material-ui/icons";
+const Styles = makeStyles((theme, props) => ({
     toolbar: {
         display: "flex",
         justifyContent: "space-between"
@@ -53,31 +55,87 @@ const Styles = makeStyles((theme) => ({
         width: "100%",
         backgroundColor: theme.palette.primary.dark,
     },
+    userAvtar: {
+        display: "flex",
+        alignItems: "center",
+
+    },
+    Search: {
+
+        display: "flex",
+        alignItems: 'center',
+        backgroundColor: alpha(theme.palette.common.white, 0.15),
+        '&:hover': {
+            backgroundColor: alpha(theme.palette.common.white, 0.25),
+        },
+        border: "solid 1px",
+        borderRadius: theme.shape.borderRadius,
+        [theme.breakpoints.down('sm')]: {
+
+            display: (props) => (props.open ? "flex" : "none"),
+            width: "70%"
+        }
+    },
+
+    searchInput: {
+        color: "white",
+        marginLeft: theme.spacing(1)
+    },
+    smallSearchButton: {
+        [theme.breakpoints.up('md')]: {
+            display: "none"
+        }
+    },
+    userName: {
+        [theme.breakpoints.down('sm')]: {
+            display: "none"
+        }
+    }
 
 }))
 const Navbar = () => {
-    const classes = Styles({})
-    const [sidebarHide, setSidebarHide] = useState(true)
+
+    const [sidebarHide, setSidebarHide] = useState(false)
+
+    const [open, setOpen] = useState(false)
+
+    const serchOpen = () => {
+       
+        setOpen(true)
+    }
+    const classes = Styles({ open })
     return (
         <>
-            <Grid contianer >
-                <Grid item xs={12}>
+            {/* <Grid contianer >
+                <Grid item xs={12}> */}
                     <AppBar position="fixed">
                         <Toolbar className={classes.toolbar}>
                             {sidebarHide &&
                                 <DehazeIcon onClick={() => { setSidebarHide(!sidebarHide) }} />
                             }{!sidebarHide &&
                                 <AiOutlineClose onClick={() => { setSidebarHide(true) }} />
-
                             }
 
                             <Typography> Welcome </Typography>
-                            <Avatar alt="Remy Sharp" src="/static/images/avatar/1.jpg" />
+
+                            <div className={classes.Search}>
+                                <Search />
+                                <InputBase placeholder="search..." className={classes.searchInput} />
+
+                            </div>
+
+                            <div className={classes.userAvtar}>
+                                <Search className={classes.smallSearchButton}
+                                    onClick={serchOpen}
+                                />
+                                <Avatar alt="Remy Sharp" src="/static/images/avatar/1.jpg" /> &nbsp;
+                                <p className={classes.userName}>{"UserName"}</p>
+                            </div>
                         </Toolbar>
 
                     </AppBar>
-                </Grid>
-            </Grid>
+                {/* </Grid>
+            </Grid> */}
             <Grid contianer spacing={1} className={classes.sidebar} position="fixed">
                 {!sidebarHide &&
                     <>
