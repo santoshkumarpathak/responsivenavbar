@@ -1,10 +1,12 @@
+// import { AppBar } from "@material-ui/core"
+import { Grid } from "@mui/material"
+import React from "react"
 
+const Home = () => {
 
-const Home = () =>{
-
-    return(
+    return (
         <>
-        Home
+            <Grid container >Home</Grid>
         </>
     )
 }

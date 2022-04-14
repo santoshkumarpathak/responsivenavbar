@@ -5,7 +5,9 @@ import { Typography } from "@material-ui/core";
 import { makeStyles, Grid } from "@material-ui/core";
 import { SidebarData } from './SidebarData'
 import { useState } from "react";
+import Home from '../component/landing pages/Home.js'
 
+import { BrowserRouter, Link, Route, Routes } from 'react-router-dom';
 const Styles = makeStyles((theme) => ({
     toolbar: {
         display: "flex",
@@ -85,17 +87,24 @@ const Navbar = () => {
                                 SidebarData.map((ele, index) => {
                                     return (
                                         <div className={classes.sidebaritem}>
-                                            <span>{ele.icon}</span>&nbsp;<span className={classes.sidebarTitle}>{ele.title}</span>
+                                            <Link to={ele.path}>
+                                                <span>{ele.icon}</span>&nbsp;
+                                                <span className={classes.sidebarTitle}>{ele.title}</span>
+                                            </Link>
                                         </div>
                                     )
                                 })}
-
                         </Grid>
                     </>
                 }
 
                 <Grid item md={!sidebarHide ? 10 : 12} className={classes.containerBar}>
-                    containet bar
+
+                    <Routes>
+                        <Route path='/' exact element={<Home />} />
+
+                    </Routes>
+
                 </Grid>
             </Grid>
         </>
