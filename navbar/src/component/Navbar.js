@@ -7,12 +7,10 @@ import { SidebarData } from './SidebarData'
 import { useState } from "react";
 
 const Styles = makeStyles((theme) => ({
-
     toolbar: {
         display: "flex",
         justifyContent: "space-between"
     },
-
     sidebar: {
         display: "flex",
         // width: "100%",
@@ -27,13 +25,20 @@ const Styles = makeStyles((theme) => ({
         backgroundColor: theme.palette.primary.light,
         display: "flex",
         flexDirection: "column",
-        alignItems: "center",
+        // alignItems: "center",
         flexWrap: "nowrap"
     },
     sidebaritem: {
+
         paddingTop: theme.spacing(2),
+        marginLeft: theme.spacing(2),
+        [theme.breakpoints.down('sm')]: {
+            marginLeft: theme.spacing(1),
+            marginRight: theme.spacing(1),
+            paddingBottom: theme.spacing(0),
+        },
         paddingBottom: theme.spacing(2),
-        cursor:"poitner"
+        cursor: "poitner"
 
     },
     sidebarTitle: {
@@ -42,10 +47,15 @@ const Styles = makeStyles((theme) => ({
             display: "none"
         }
     },
+    containerBar: {
+        height: "100vh",
+        width: "100%",
+        backgroundColor: theme.palette.primary.dark,
+    },
 
 }))
 const Navbar = () => {
-    const classes = Styles()
+    const classes = Styles({})
     const [sidebarHide, setSidebarHide] = useState(true)
     return (
         <>
@@ -84,13 +94,9 @@ const Navbar = () => {
                     </>
                 }
 
-
-
-                <Grid item md={10} >
+                <Grid item md={!sidebarHide ? 10 : 12} className={classes.containerBar}>
                     containet bar
                 </Grid>
-
-
             </Grid>
         </>
     )
