@@ -5,7 +5,7 @@ import { AiOutlineClose } from "react-icons/ai";
 import { SidebarData } from './SidebarData'
 import React, { useState } from "react";
 import Home from '../component/landing pages/Home.js'
-import { AppBar, InputBase, makeStyles, Toolbar, Typography, alpha, Badge, Avatar, Grid } from '@material-ui/core'
+import { AppBar, InputBase, makeStyles, Toolbar, Typography, alpha, Badge, Avatar, Grid, Button, Menu, MenuItem } from '@material-ui/core'
 
 
 import { Link, Route, Routes } from 'react-router-dom';
@@ -60,7 +60,7 @@ const style = makeStyles((theme) => ({
         alignItems: "center",
 
         [theme.breakpoints.down('sm')]: {
-            display: (props) =>(props.open ? "flex" : "none")
+            display: (props) => (props.open ? "flex" : "none")
         }
     },
     Search: {
@@ -95,6 +95,7 @@ const style = makeStyles((theme) => ({
         }
     },
     userName: {
+        color: "white",
         [theme.breakpoints.down('sm')]: {
             display: "none"
         }
@@ -104,27 +105,42 @@ const style = makeStyles((theme) => ({
             display: "none"
         }
     },
-    link:{
-        textDecoration:"none"
+    link: {
+        textDecoration: "none"
+    },
+    popupmenu: {
+        marginTop: theme.spacing(5),
+        marginLeft: theme.spacing(2)
+
     }
 
 }))
 const Navbar = () => {
+    //right avatar menu pop-up
+    const [anchorEl, setAnchorEl] = React.useState(null);
+    const open = Boolean(anchorEl);
+    const handleClick = (e) => {
+        console.log(e.currentTarget)
+        setAnchorEl(e.currentTarget);
+    }; const handleClose = () => {
+        setAnchorEl(null);
+    };
+    //close right pop-up
 
     const [sidebarHide, setSidebarHide] = useState(false)
 
-    const [open, setOpen] = useState(false)
+    const [searchOpen, setSearchopen] = useState(false)
     const serchOpen = (e) => {
         e.preventDefault()
-        setOpen(true)
+        setSearchopen(true)
         // alert('true')
     }
-    const serchclosed = (e) =>{
+    const serchclosed = (e) => {
         e.preventDefault()
-        setOpen(false)
+        setSearchopen(false)
     }
-    const classes = style({ open });
-    console.log(classes, open);
+    const classes = style({ searchOpen });
+    console.log(classes, searchOpen);
 
     return (
         <>
@@ -135,7 +151,7 @@ const Navbar = () => {
                     {sidebarHide &&
                         <DehazeIcon onClick={() => { setSidebarHide(!sidebarHide) }} />
                     }{!sidebarHide &&
-                        <AiOutlineClose onClick={() => { setSidebarHide(true) }} />
+                        <DehazeIcon onClick={() => { setSidebarHide(true) }} />
                     }
 
                     <Typography> Welcome </Typography>
@@ -143,15 +159,40 @@ const Navbar = () => {
                     <div className={classes.Search}>
                         <Search />
                         <InputBase placeholder="search..." className={classes.searchInput} />
-                        <Cancel className={classes.Cancel} onClick={serchclosed}/>
+                        <Cancel className={classes.Cancel} onClick={serchclosed} />
                     </div>
 
                     <div className={classes.userAvtar}>
                         <Search className={classes.smallSearchButton}
                             onClick={serchOpen}
                         />
-                        <Avatar alt="Remy Sharp" src="/static/images/avatar/1.jpg" /> &nbsp;
-                        <p className={classes.userName}>{"UserName"}</p>
+                        <Button id="demo-positioned-button"
+                            aria-controls={open ? 'demo-positioned-menu' : undefined}
+                            aria-haspopup="true"
+                            aria-expanded={open ? 'true' : undefined}
+                            onClick={handleClick}>
+                            <Avatar alt="Remy Sharp" src="/static/images/avatar/1.jpg" /> &nbsp;
+                            <p className={classes.userName}>{"UserName"}</p>
+                        </Button>
+                        <Menu className={classes.popupmenu}
+                            id="demo-positioned-menu"
+                            aria-labelledby="demo-positioned-button"
+                            anchorEl={anchorEl}
+                            open={open}
+                            onClose={handleClose}
+                            anchorOrigin={{
+                                vertical: 'top',
+                                horizontal: 'left',
+                            }}
+                            transformOrigin={{
+                                vertical: 'top',
+                                horizontal: 'left',
+                            }}
+                        >
+                            <MenuItem>Profile</MenuItem>
+                            <MenuItem >My account</MenuItem>
+                            <MenuItem >Logout</MenuItem>
+                        </Menu>
                     </div>
                 </Toolbar>
 
