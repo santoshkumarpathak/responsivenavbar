@@ -1,16 +1,16 @@
-import { AppBar, Avatar, Toolbar } from "@mui/material"
+
 import DehazeIcon from '@mui/icons-material/Dehaze';
 import { AiOutlineClose } from "react-icons/ai";
-import { alpha, InputBase, Typography } from "@material-ui/core";
-import { makeStyles } from "@material-ui/core/styles";
-import { Grid } from "@material-ui/core";
+
 import { SidebarData } from './SidebarData'
-import { useState } from "react";
+import React, { useState } from "react";
 import Home from '../component/landing pages/Home.js'
+import { AppBar, InputBase, makeStyles, Toolbar, Typography, alpha, Badge, Avatar, Grid } from '@material-ui/core'
+
 
 import { Link, Route, Routes } from 'react-router-dom';
-import { Search } from "@material-ui/icons";
-const Styles = makeStyles((theme, props) => ({
+import { Cancel, Search } from "@material-ui/icons";
+const style = makeStyles((theme) => ({
     toolbar: {
         display: "flex",
         justifyContent: "space-between"
@@ -59,6 +59,9 @@ const Styles = makeStyles((theme, props) => ({
         display: "flex",
         alignItems: "center",
 
+        [theme.breakpoints.down('sm')]: {
+            display: (props) =>(props.open ? "flex" : "none")
+        }
     },
     Search: {
 
@@ -71,7 +74,7 @@ const Styles = makeStyles((theme, props) => ({
         border: "solid 1px",
         borderRadius: theme.shape.borderRadius,
         [theme.breakpoints.down('sm')]: {
-
+            // display: "none",
             display: (props) => (props.open ? "flex" : "none"),
             width: "70%"
         }
@@ -80,9 +83,14 @@ const Styles = makeStyles((theme, props) => ({
     searchInput: {
         color: "white",
         marginLeft: theme.spacing(1)
+
     },
     smallSearchButton: {
         [theme.breakpoints.up('md')]: {
+            display: "none"
+        },
+
+        [theme.breakpoints.up('sm')]: {
             display: "none"
         }
     },
@@ -90,6 +98,14 @@ const Styles = makeStyles((theme, props) => ({
         [theme.breakpoints.down('sm')]: {
             display: "none"
         }
+    },
+    Cancel: {
+        [theme.breakpoints.up('sm')]: {
+            display: "none"
+        }
+    },
+    link:{
+        textDecoration:"none"
     }
 
 }))
@@ -98,43 +114,49 @@ const Navbar = () => {
     const [sidebarHide, setSidebarHide] = useState(false)
 
     const [open, setOpen] = useState(false)
-
-    const serchOpen = () => {
-       
+    const serchOpen = (e) => {
+        e.preventDefault()
         setOpen(true)
+        // alert('true')
     }
-    const classes = Styles({ open })
+    const serchclosed = (e) =>{
+        e.preventDefault()
+        setOpen(false)
+    }
+    const classes = style({ open });
+    console.log(classes, open);
+
     return (
         <>
             {/* <Grid contianer >
                 <Grid item xs={12}> */}
-                    <AppBar position="fixed">
-                        <Toolbar className={classes.toolbar}>
-                            {sidebarHide &&
-                                <DehazeIcon onClick={() => { setSidebarHide(!sidebarHide) }} />
-                            }{!sidebarHide &&
-                                <AiOutlineClose onClick={() => { setSidebarHide(true) }} />
-                            }
+            <AppBar position="fixed">
+                <Toolbar className={classes.toolbar}>
+                    {sidebarHide &&
+                        <DehazeIcon onClick={() => { setSidebarHide(!sidebarHide) }} />
+                    }{!sidebarHide &&
+                        <AiOutlineClose onClick={() => { setSidebarHide(true) }} />
+                    }
 
-                            <Typography> Welcome </Typography>
+                    <Typography> Welcome </Typography>
 
-                            <div className={classes.Search}>
-                                <Search />
-                                <InputBase placeholder="search..." className={classes.searchInput} />
+                    <div className={classes.Search}>
+                        <Search />
+                        <InputBase placeholder="search..." className={classes.searchInput} />
+                        <Cancel className={classes.Cancel} onClick={serchclosed}/>
+                    </div>
 
-                            </div>
+                    <div className={classes.userAvtar}>
+                        <Search className={classes.smallSearchButton}
+                            onClick={serchOpen}
+                        />
+                        <Avatar alt="Remy Sharp" src="/static/images/avatar/1.jpg" /> &nbsp;
+                        <p className={classes.userName}>{"UserName"}</p>
+                    </div>
+                </Toolbar>
 
-                            <div className={classes.userAvtar}>
-                                <Search className={classes.smallSearchButton}
-                                    onClick={serchOpen}
-                                />
-                                <Avatar alt="Remy Sharp" src="/static/images/avatar/1.jpg" /> &nbsp;
-                                <p className={classes.userName}>{"UserName"}</p>
-                            </div>
-                        </Toolbar>
-
-                    </AppBar>
-                {/* </Grid>
+            </AppBar>
+            {/* </Grid>
             </Grid> */}
             <Grid contianer spacing={1} className={classes.sidebar} position="fixed">
                 {!sidebarHide &&
@@ -144,7 +166,7 @@ const Navbar = () => {
                                 SidebarData.map((ele, index) => {
                                     return (
                                         <div className={classes.sidebaritem}>
-                                            <Link to={ele.path}>
+                                            <Link to={ele.path} className={classes.link}>
                                                 <span>{ele.icon}</span>&nbsp;
                                                 <span className={classes.sidebarTitle}>{ele.title}</span>
                                             </Link>
