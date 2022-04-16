@@ -6,7 +6,7 @@ const Home = () => {
 
     return (
         <>
-            <Grid container >Home</Grid>
+            <Grid container color={'white'}>Home</Grid>
         </>
     )
 }

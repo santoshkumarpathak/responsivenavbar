@@ -1,60 +1,20 @@
 
 import DehazeIcon from '@mui/icons-material/Dehaze';
-import { AiOutlineClose } from "react-icons/ai";
+// import { AiOutlineClose } from "react-icons/ai";
 
-import { SidebarData } from './SidebarData'
+
 import React, { useState } from "react";
-import Home from '../component/landing pages/Home.js'
-import { AppBar, InputBase, makeStyles, Toolbar, Typography, alpha, Badge, Avatar, Grid, Button, Menu, MenuItem } from '@material-ui/core'
 
+import { AppBar, InputBase, makeStyles, Toolbar, Typography, alpha, Avatar, Button, Menu, MenuItem, } from '@material-ui/core'
 
-import { Link, Route, Routes } from 'react-router-dom';
 import { Cancel, Search } from "@material-ui/icons";
+import MainContent from './MainContent'
 const style = makeStyles((theme) => ({
     toolbar: {
         display: "flex",
         justifyContent: "space-between"
     },
-    sidebar: {
-        display: "flex",
-        // width: "100%",
-        paddingTop: theme.spacing(8),
-        [theme.breakpoints.down('sm')]: {
-            paddingTop: theme.spacing(7)
-        }
-    },
 
-    sidebarlist: {
-        height: "100vh",
-        backgroundColor: theme.palette.primary.light,
-        display: "flex",
-        flexDirection: "column",
-        // alignItems: "center",
-        flexWrap: "nowrap"
-    },
-    sidebaritem: {
-        paddingTop: theme.spacing(2),
-        marginLeft: theme.spacing(2),
-        [theme.breakpoints.down('sm')]: {
-            marginLeft: theme.spacing(1),
-            marginRight: theme.spacing(1),
-            paddingBottom: theme.spacing(0),
-        },
-        paddingBottom: theme.spacing(2),
-        cursor: "poitner"
-
-    },
-    sidebarTitle: {
-
-        [theme.breakpoints.down('sm')]: {
-            display: "none"
-        }
-    },
-    containerBar: {
-        height: "100vh",
-        width: "100%",
-        backgroundColor: theme.palette.primary.dark,
-    },
     userAvtar: {
         display: "flex",
         alignItems: "center",
@@ -75,7 +35,7 @@ const style = makeStyles((theme) => ({
         borderRadius: theme.shape.borderRadius,
         [theme.breakpoints.down('sm')]: {
             // display: "none",
-            display: (props) => (props.open ? "flex" : "none"),
+            display: (props) => (props.searchOpen ? "flex" : "none"),
             width: "70%"
         }
     },
@@ -105,17 +65,22 @@ const style = makeStyles((theme) => ({
             display: "none"
         }
     },
-    link: {
-        textDecoration: "none"
-    },
+
     popupmenu: {
         marginTop: theme.spacing(5),
         marginLeft: theme.spacing(2)
 
+    },
+
+    toggelbtn: {
+        marginRight: "5px",
+        transform: (props) => (props.toggle ? "rotate(180deg)" : "rotate(0deg)")
     }
 
+
+
 }))
-const Navbar = () => {
+const Navbar = (prop) => {
     //right avatar menu pop-up
     const [anchorEl, setAnchorEl] = React.useState(null);
     const open = Boolean(anchorEl);
@@ -128,19 +93,18 @@ const Navbar = () => {
     //close right pop-up
 
     const [sidebarHide, setSidebarHide] = useState(false)
-
-    const [searchOpen, setSearchopen] = useState(false)
+    const [searchOpen, setSearchOpen] = useState(false)
     const serchOpen = (e) => {
         e.preventDefault()
-        setSearchopen(true)
+        setSearchOpen(!searchOpen)
         // alert('true')
     }
     const serchclosed = (e) => {
         e.preventDefault()
-        setSearchopen(false)
+        setSearchOpen(!searchOpen)
     }
     const classes = style({ searchOpen });
-    console.log(classes, searchOpen);
+    console.log(sidebarHide);
 
     return (
         <>
@@ -150,7 +114,8 @@ const Navbar = () => {
                 <Toolbar className={classes.toolbar}>
                     {sidebarHide &&
                         <DehazeIcon onClick={() => { setSidebarHide(!sidebarHide) }} />
-                    }{!sidebarHide &&
+                    }
+                    {!sidebarHide &&
                         <DehazeIcon onClick={() => { setSidebarHide(true) }} />
                     }
 
@@ -197,19 +162,24 @@ const Navbar = () => {
                 </Toolbar>
 
             </AppBar>
+            {}
+            <MainContent itemSidebar={sidebarHide} />
             {/* </Grid>
             </Grid> */}
-            <Grid contianer spacing={1} className={classes.sidebar} position="fixed">
+            {/* <Grid contianer spacing={1} className={classes.sidebar} position="fixed">
                 {!sidebarHide &&
                     <>
                         < Grid item md={2} className={classes.sidebarlist}>
                             {
                                 SidebarData.map((ele, index) => {
                                     return (
-                                        <div className={classes.sidebaritem}>
+                                        <div className={classes.sidebaritem }>
                                             <Link to={ele.path} className={classes.link}>
-                                                <span>{ele.icon}</span>&nbsp;
-                                                <span className={classes.sidebarTitle}>{ele.title}</span>
+                                                <div >
+                                                    <span>{ele.icon}</span>&nbsp;
+                                                    <span className={classes.sidebarTitle}>{ele.title}</span>
+                                                </div>
+                                                <AiFillCaretDown className={classes.toggelbtn}  onClick={() =>{setToggle(!toggle)}}/>
                                             </Link>
                                         </div>
                                     )
@@ -226,7 +196,7 @@ const Navbar = () => {
                     </Routes>
 
                 </Grid>
-            </Grid>
+            </Grid> */}
         </>
     )
 }
