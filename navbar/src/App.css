@@ -12,17 +12,56 @@
   display: block;
   transition: background-color .15s;
   border-radius: 5px;
+
 }
 
 .sidebarItem:hover {
   background-color: rgba(255, 255, 255, .1);
 }
 
-.toggelbtn{
+.sidebarList {
+  display: flex;
+  font-size: 1.2em;
+  padding: .22em;
+  color: white;
+  justify-content: space-between;
+}
+
+.sidebarList span i {
+  display: inline-block;
+  width: 1.5em;
+}
+
+.sidebarList .toggelbtn {
   cursor: pointer;
   transition: transform .3s;
 }
 
-.sidebarItem.toggle .toggle-btn {
+.sidebarItem.toggle>.sidebarList .toggelbtn {
   transform: rotate(180deg);
+}
+
+.sidebarContent {
+  padding-top: .25em;
+  height: 0;
+  overflow: hidden;
+}
+
+.sidebarItem.toggle>.sidebarContent {
+  height: auto;
+}
+
+.sidebarItem.nolink .value {
+  color: white;
+  text-decoration: none;
+}
+
+/* .sidebarItem.plain:hover { */
+/* text-decoration: "none"; */
+/* background-color: rgba(255, 255, 255, .1); */
+/* } */
+
+.sidebarItem.nolink .value i {
+  display: inline-block;
+  width: 1.7em;
 }

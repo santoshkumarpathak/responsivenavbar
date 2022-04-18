@@ -17,7 +17,6 @@ const style = makeStyles((theme) => ({
     },
     sidebar: {
         display: "flex",
-
         paddingTop: theme.spacing(8),
         [theme.breakpoints.down('sm')]: {
             paddingTop: theme.spacing(7)
@@ -30,7 +29,8 @@ const style = makeStyles((theme) => ({
         display: "flex",
         flexDirection: "column",
         // alignItems: "center",
-        flexWrap: "nowrap"
+        flexWrap: "nowrap",
+        overflow:"auto"
     },
 
     sidebaritem: {
@@ -73,8 +73,6 @@ const MainContent = (props) => {
     return (
         <>
             <Grid contianer spacing={1} className={classes.sidebar} >
-
-
                 {!props.itemSidebar &&
                     <>
                         < Grid item md={2} className={classes.sidebarlist} position="fixed">
@@ -82,7 +80,6 @@ const MainContent = (props) => {
                         </Grid>
                     </>
                 }
-
                 <Grid item md={
                     !props.itemSidebar ? 10 : 12
                 } className={classes.containerBar}>
@@ -90,10 +87,8 @@ const MainContent = (props) => {
                         <Route path='/' exact element={<Home />} />
                     </Routes>
                 </Grid>
-
             </Grid >
         </>
     )
 }
-
 export default MainContent

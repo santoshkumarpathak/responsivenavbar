@@ -4,38 +4,10 @@ import { AiFillCaretDown } from "react-icons/ai";
 import { makeStyles } from "@material-ui/core";
 // import { SidebarData } from './SidebarData'
 
-import Home from './landing pages/Home.js'
+
 import { useState } from "react";
 
 const style = makeStyles((theme) => ({
-
-
-    sidebaritem: {
-        display: "block",
-        cursor: "pointer",
-
-        paddingTop: theme.spacing(2),
-        paddingLeft: theme.spacing(2),
-        [theme.breakpoints.down('sm')]: {
-            marginLeft: theme.spacing(1),
-            marginRight: theme.spacing(1),
-            paddingBottom: theme.spacing(0),
-        },
-        paddingBottom: theme.spacing(2),
-
-        "&:hover": {
-            // width: "1em",
-            backgroundColor: alpha(theme.palette.common.white, 0.25),
-            borderRadius: "8px",
-        }
-    },
-    link: {
-        display: "flex",
-        justifyContent: "space-between",
-        alignItems: "center",
-        color: "#fafafd"
-    },
-
 
 }))
 const ItemContent = (props) => {
@@ -48,17 +20,18 @@ const ItemContent = (props) => {
         return (
             <>
                 <div className={toggle ? "sidebarItem toggle" : "sidebarItem"}>
-                    <Link to={props.item.path} className={classes.link}>
-                        <div >
-                            <i className={props.item.icon}></i>
-                            &nbsp;
+                    <div className="sidebarList">
+                        <span>
+                            {props.item.icon &&
+                                <i className={props.item.icon}></i>}
                             {props.item.title}
-                        </div>
-                        <AiFillCaretDown className="toggelbtn" onClick={() => { setToggle(!toggle) }} />
-                    </Link>
-                </div>
-                <div>
+                        </span>
+                        <i className="bi-chevron-down toggelbtn" onClick={() => { setToggle(!toggle) }}></i>
+                    </div>
+                    <div className="sidebarContent">
 
+                        {props.item.childrens.map((ele, index) => < ItemContent key={index} item={ele} />)}
+                    </div>
                 </div>
             </>
         )
@@ -66,16 +39,15 @@ const ItemContent = (props) => {
     else {
         return (
             <>
-                <div className={classes.sidebaritem}>
-                    <Link to={props.item.path} className={classes.link}>
-                        <div >
+                <div className="sidebarItem nolink">
+                    <a to={props.item.path} >
+                        <div className="value">
                             <i className={props.item.icon}></i>
-
                             &nbsp;
                             {props.item.title}
                         </div>
-                        <AiFillCaretDown className={classes.toggelbtn} onClick={() => { setToggle(!toggle) }} />
-                    </Link>
+                        {/* <AiFillCaretDown className={classes.toggelbtn} onClick={() => { setToggle(!toggle) }} /> */}
+                    </a>
                 </div>
             </>
         )
