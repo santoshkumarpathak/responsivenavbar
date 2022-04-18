@@ -11,11 +11,9 @@ const style = makeStyles((theme) => ({
 
 }))
 const ItemContent = (props) => {
-
     const classes = style()
     const [toggle, setToggle] = useState(false)
     // console.log(toggle)
-
     if (props.item.childrens) {
         return (
             <>
@@ -40,14 +38,14 @@ const ItemContent = (props) => {
         return (
             <>
                 <div className="sidebarItem nolink">
-                    <a to={props.item.path} >
+                    <Link to={props.item.path} >
                         <div className="value">
                             <i className={props.item.icon}></i>
                             &nbsp;
                             {props.item.title}
                         </div>
                         {/* <AiFillCaretDown className={classes.toggelbtn} onClick={() => { setToggle(!toggle) }} /> */}
-                    </a>
+                    </Link>
                 </div>
             </>
         )

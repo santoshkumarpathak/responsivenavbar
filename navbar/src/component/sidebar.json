@@ -6,7 +6,7 @@
             {
                 "title": "Home",
                 "icon": "bi-house-fill",
-                "path": "/"
+                "path": "/home"
             },
             {
                 "title": "About",

@@ -5,8 +5,10 @@ import DehazeIcon from '@mui/icons-material/Dehaze';
 
 import React, { useState } from "react";
 
-import { AppBar, InputBase, makeStyles, Toolbar, Typography, alpha, Avatar, Button, Menu, MenuItem, } from '@material-ui/core'
-
+import {
+    AppBar, InputBase, makeStyles,
+    Toolbar, Typography, alpha, Avatar, Button, Menu, MenuItem,
+} from '@material-ui/core'
 import { Cancel, Search } from "@material-ui/icons";
 import MainContent from './MainContent'
 const style = makeStyles((theme) => ({
@@ -14,7 +16,6 @@ const style = makeStyles((theme) => ({
         display: "flex",
         justifyContent: "space-between"
     },
-
     userAvtar: {
         display: "flex",
         alignItems: "center",
@@ -24,7 +25,6 @@ const style = makeStyles((theme) => ({
         }
     },
     Search: {
-
         display: "flex",
         alignItems: 'center',
         backgroundColor: alpha(theme.palette.common.white, 0.15),
@@ -35,11 +35,10 @@ const style = makeStyles((theme) => ({
         borderRadius: theme.shape.borderRadius,
         [theme.breakpoints.down('sm')]: {
             // display: "none",
-            display: (props) => (props.searchOpen ? "flex" : "none"),
-            width: "70%"
+            display: (props) => (props.searchOpen) ? "flex" : "none",
+            // width: "70%"
         }
     },
-
     searchInput: {
         color: "white",
         marginLeft: theme.spacing(1)
@@ -49,10 +48,6 @@ const style = makeStyles((theme) => ({
         [theme.breakpoints.up('md')]: {
             display: "none"
         },
-
-        [theme.breakpoints.up('sm')]: {
-            display: "none"
-        }
     },
     userName: {
         color: "white",
@@ -65,22 +60,17 @@ const style = makeStyles((theme) => ({
             display: "none"
         }
     },
-
     popupmenu: {
         marginTop: theme.spacing(5),
         marginLeft: theme.spacing(2)
 
     },
-
     toggelbtn: {
         marginRight: "5px",
         transform: (props) => (props.toggle ? "rotate(180deg)" : "rotate(0deg)")
     }
-
-
-
 }))
-const Navbar = (prop) => {
+const Navbar = () => {
     //right avatar menu pop-up
     const [anchorEl, setAnchorEl] = React.useState(null);
     const open = Boolean(anchorEl);
@@ -96,15 +86,15 @@ const Navbar = (prop) => {
     const [searchOpen, setSearchOpen] = useState(false)
     const serchOpen = (e) => {
         e.preventDefault()
-        setSearchOpen(!searchOpen)
+        setSearchOpen(true)
         // alert('true')
     }
     const serchclosed = (e) => {
         e.preventDefault()
-        setSearchOpen(!searchOpen)
+        setSearchOpen(false)
     }
     const classes = style({ searchOpen });
-    console.log(sidebarHide);
+    console.log(classes, searchOpen);
 
     return (
         <>
@@ -162,7 +152,7 @@ const Navbar = (prop) => {
                 </Toolbar>
 
             </AppBar>
-            {}
+
             <MainContent itemSidebar={sidebarHide} />
             {/* </Grid>
             </Grid> */}
