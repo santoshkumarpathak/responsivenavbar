@@ -1,16 +1,16 @@
-import { AppBar, Avatar, Toolbar } from "@mui/material"
+
 import DehazeIcon from '@mui/icons-material/Dehaze';
 import { AiOutlineClose } from "react-icons/ai";
-import { alpha, InputBase, Typography } from "@material-ui/core";
-import { makeStyles } from "@material-ui/core/styles";
-import { Grid } from "@material-ui/core";
+
 import { SidebarData } from './SidebarData'
-import { useState } from "react";
+import React, { useState } from "react";
 import Home from '../component/landing pages/Home.js'
+import { AppBar, InputBase, makeStyles, Toolbar, Typography, alpha, Badge, Avatar, Grid, Button, Menu, MenuItem } from '@material-ui/core'
+
 
 import { Link, Route, Routes } from 'react-router-dom';
-import { Search } from "@material-ui/icons";
-const Styles = makeStyles((theme, props) => ({
+import { Cancel, Search } from "@material-ui/icons";
+const style = makeStyles((theme) => ({
     toolbar: {
         display: "flex",
         justifyContent: "space-between"
@@ -59,6 +59,9 @@ const Styles = makeStyles((theme, props) => ({
         display: "flex",
         alignItems: "center",
 
+        [theme.breakpoints.down('sm')]: {
+            display: (props) => (props.open ? "flex" : "none")
+        }
     },
     Search: {
 
@@ -71,7 +74,7 @@ const Styles = makeStyles((theme, props) => ({
         border: "solid 1px",
         borderRadius: theme.shape.borderRadius,
         [theme.breakpoints.down('sm')]: {
-
+            // display: "none",
             display: (props) => (props.open ? "flex" : "none"),
             width: "70%"
         }
@@ -80,61 +83,121 @@ const Styles = makeStyles((theme, props) => ({
     searchInput: {
         color: "white",
         marginLeft: theme.spacing(1)
+
     },
     smallSearchButton: {
         [theme.breakpoints.up('md')]: {
             display: "none"
+        },
+
+        [theme.breakpoints.up('sm')]: {
+            display: "none"
         }
     },
     userName: {
+        color: "white",
         [theme.breakpoints.down('sm')]: {
             display: "none"
         }
+    },
+    Cancel: {
+        [theme.breakpoints.up('sm')]: {
+            display: "none"
+        }
+    },
+    link: {
+        textDecoration: "none"
+    },
+    popupmenu: {
+        marginTop: theme.spacing(5),
+        marginLeft: theme.spacing(2)
+
     }
 
 }))
 const Navbar = () => {
+    //right avatar menu pop-up
+    const [anchorEl, setAnchorEl] = React.useState(null);
+    const open = Boolean(anchorEl);
+    const handleClick = (e) => {
+        console.log(e.currentTarget)
+        setAnchorEl(e.currentTarget);
+    }; const handleClose = () => {
+        setAnchorEl(null);
+    };
+    //close right pop-up
 
     const [sidebarHide, setSidebarHide] = useState(false)
 
-    const [open, setOpen] = useState(false)
-
-    const serchOpen = () => {
-       
-        setOpen(true)
+    const [searchOpen, setSearchopen] = useState(false)
+    const serchOpen = (e) => {
+        e.preventDefault()
+        setSearchopen(true)
+        // alert('true')
     }
-    const classes = Styles({ open })
+    const serchclosed = (e) => {
+        e.preventDefault()
+        setSearchopen(false)
+    }
+    const classes = style({ searchOpen });
+    console.log(classes, searchOpen);
+
     return (
         <>
             {/* <Grid contianer >
                 <Grid item xs={12}> */}
-                    <AppBar position="fixed">
-                        <Toolbar className={classes.toolbar}>
-                            {sidebarHide &&
-                                <DehazeIcon onClick={() => { setSidebarHide(!sidebarHide) }} />
-                            }{!sidebarHide &&
-                                <AiOutlineClose onClick={() => { setSidebarHide(true) }} />
-                            }
+            <AppBar position="fixed">
+                <Toolbar className={classes.toolbar}>
+                    {sidebarHide &&
+                        <DehazeIcon onClick={() => { setSidebarHide(!sidebarHide) }} />
+                    }{!sidebarHide &&
+                        <DehazeIcon onClick={() => { setSidebarHide(true) }} />
+                    }
 
-                            <Typography> Welcome </Typography>
+                    <Typography> Welcome </Typography>
 
-                            <div className={classes.Search}>
-                                <Search />
-                                <InputBase placeholder="search..." className={classes.searchInput} />
+                    <div className={classes.Search}>
+                        <Search />
+                        <InputBase placeholder="search..." className={classes.searchInput} />
+                        <Cancel className={classes.Cancel} onClick={serchclosed} />
+                    </div>
 
-                            </div>
+                    <div className={classes.userAvtar}>
+                        <Search className={classes.smallSearchButton}
+                            onClick={serchOpen}
+                        />
+                        <Button id="demo-positioned-button"
+                            aria-controls={open ? 'demo-positioned-menu' : undefined}
+                            aria-haspopup="true"
+                            aria-expanded={open ? 'true' : undefined}
+                            onClick={handleClick}>
+                            <Avatar alt="Remy Sharp" src="/static/images/avatar/1.jpg" /> &nbsp;
+                            <p className={classes.userName}>{"UserName"}</p>
+                        </Button>
+                        <Menu className={classes.popupmenu}
+                            id="demo-positioned-menu"
+                            aria-labelledby="demo-positioned-button"
+                            anchorEl={anchorEl}
+                            open={open}
+                            onClose={handleClose}
+                            anchorOrigin={{
+                                vertical: 'top',
+                                horizontal: 'left',
+                            }}
+                            transformOrigin={{
+                                vertical: 'top',
+                                horizontal: 'left',
+                            }}
+                        >
+                            <MenuItem>Profile</MenuItem>
+                            <MenuItem >My account</MenuItem>
+                            <MenuItem >Logout</MenuItem>
+                        </Menu>
+                    </div>
+                </Toolbar>
 
-                            <div className={classes.userAvtar}>
-                                <Search className={classes.smallSearchButton}
-                                    onClick={serchOpen}
-                                />
-                                <Avatar alt="Remy Sharp" src="/static/images/avatar/1.jpg" /> &nbsp;
-                                <p className={classes.userName}>{"UserName"}</p>
-                            </div>
-                        </Toolbar>
-
-                    </AppBar>
-                {/* </Grid>
+            </AppBar>
+            {/* </Grid>
             </Grid> */}
             <Grid contianer spacing={1} className={classes.sidebar} position="fixed">
                 {!sidebarHide &&
@@ -144,7 +207,7 @@ const Navbar = () => {
                                 SidebarData.map((ele, index) => {
                                     return (
                                         <div className={classes.sidebaritem}>
-                                            <Link to={ele.path}>
+                                            <Link to={ele.path} className={classes.link}>
                                                 <span>{ele.icon}</span>&nbsp;
                                                 <span className={classes.sidebarTitle}>{ele.title}</span>
                                             </Link>
