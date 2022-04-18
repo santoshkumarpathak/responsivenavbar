@@ -7,8 +7,7 @@ import home from './landing pages/Home.js'
 import about from './landing pages/About.js'
 
 
-export const SidebarData =
-  [
+export const SidebarData =[
     {
       title: "General",
       icon: "bi-gear-fill",
@@ -94,7 +93,7 @@ export const SidebarData =
           "childrens": [
             {
               "title": "Account",
-              "path": "/settings/account"
+              "path": "account"
             },
             {
               "title": "Billing",
