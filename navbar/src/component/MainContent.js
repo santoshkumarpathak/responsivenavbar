@@ -7,6 +7,8 @@ import { SidebarData } from './SidebarData'
 
 import Home from './landing pages/Home.js'
 import About from './landing pages/About.js'
+import Account from './landing pages/Account.js'
+import Support from './landing pages/Support.js'
 import { useState } from "react";
 import { Routes, Route } from 'react-router-dom';
 
@@ -74,8 +76,12 @@ const MainContent = (props) => {
                 {!props.itemSidebar &&
                     <>
                         < Grid item md={2} className={classes.sidebarlist} position="fixed">
+
                             {SidebarData.map((item, index) => <ItemContent key={index} item={item} />)}
+
+
                         </Grid>
+
                     </>
                 }
                 <Grid item md={
@@ -85,6 +91,8 @@ const MainContent = (props) => {
                     <Routes>
                         <Route path='/home' exact element={<Home />} />
                         <Route path='/about' exact element={<About />} />
+                        <Route path='/account' exact element={<Account />} />
+                        <Route path='/support' exact element={<Support />} />
                     </Routes>
                 </Grid>
             </Grid >

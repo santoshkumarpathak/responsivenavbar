@@ -1,9 +1,11 @@
 import { alpha, Grid, Link } from "@material-ui/core";
-import { Route, Routes } from "react-router-dom";
+import { NavLink, Route, Routes } from "react-router-dom";
 import { AiFillCaretDown } from "react-icons/ai";
 import { makeStyles } from "@material-ui/core";
+import { useNavigate } from "react-router-dom";
 // import { SidebarData } from './SidebarData'
-
+import Home from './landing pages/Home.js'
+import About from './landing pages/About.js'
 
 import { useState } from "react";
 
@@ -11,6 +13,7 @@ const style = makeStyles((theme) => ({
 
 }))
 const ItemContent = (props) => {
+    const navigate = useNavigate();
     const classes = style()
     const [toggle, setToggle] = useState(false)
     // console.log(toggle)
@@ -38,15 +41,20 @@ const ItemContent = (props) => {
         return (
             <>
                 <div className="sidebarItem nolink">
-                    <Link to={props.item.path} >
-                        <div className="value">
-                            <i className={props.item.icon}></i>
-                            &nbsp;
-                            {props.item.title}
-                        </div>
-                        {/* <AiFillCaretDown className={classes.toggelbtn} onClick={() => { setToggle(!toggle) }} /> */}
-                    </Link>
+                    <nav>
+                        <a to={props.item.path} onClick={() => navigate(props.item.path)}>
+                            <div className="value">
+                                <i className={props.item.icon}></i>
+                                &nbsp;
+                                {props.item.title}
+                            </div>
+
+                            {/* <AiFillCaretDown className={classes.toggelbtn} onClick={() => { setToggle(!toggle) }} /> */}
+                        </a>
+                    </nav>
+
                 </div>
+
             </>
         )
     }
