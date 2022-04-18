@@ -14,7 +14,7 @@ const ItemContent = (props) => {
 
     const classes = style()
     const [toggle, setToggle] = useState(false)
-    console.log(toggle)
+    // console.log(toggle)
 
     if (props.item.childrens) {
         return (
