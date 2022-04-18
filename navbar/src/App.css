@@ -5,14 +5,11 @@
   font-family: 'Lato', sans-serif;
 }
 
-
-
 .sidebarItem {
   padding: .75em 1em;
   display: block;
   transition: background-color .15s;
   border-radius: 5px;
-
 }
 
 .sidebarItem:hover {
@@ -31,8 +28,7 @@
   display: inline-block;
   width: 1.5em;
 }
-
-.sidebarList .toggelbtn {
+.sidebarList .toggelbtn{
   cursor: pointer;
   transition: transform .3s;
 }
@@ -40,7 +36,6 @@
 .sidebarItem.toggle>.sidebarList .toggelbtn {
   transform: rotate(180deg);
 }
-
 .sidebarContent {
   padding-top: .25em;
   height: 0;
@@ -65,3 +60,4 @@
   display: inline-block;
   width: 1.7em;
 }
+
